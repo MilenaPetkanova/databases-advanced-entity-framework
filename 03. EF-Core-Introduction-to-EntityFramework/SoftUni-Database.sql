@@ -6,11 +6,6 @@
 USE master
 GO
 
-
-
-DROP DATABASE SoftUni
-GO
-
 CREATE DATABASE SoftUni
 GO
 
