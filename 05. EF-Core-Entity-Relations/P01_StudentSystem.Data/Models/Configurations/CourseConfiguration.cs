@@ -29,6 +29,7 @@
 
             builder.Property(c => c.Price)
                 .IsRequired();
+
         }
     }
 }

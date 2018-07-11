@@ -25,7 +25,7 @@
 
             builder.Property(s => s.Birthday)
                 .IsRequired(false)
-                .HasColumnType("DATE");
+                .HasColumnType("DATETME2");
         }
     }
 }
