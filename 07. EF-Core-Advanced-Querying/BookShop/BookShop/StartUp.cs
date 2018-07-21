@@ -60,7 +60,14 @@
                 //Console.WriteLine(GetTotalProfitByCategory(db));
 
                 //// 13. Most Recent Books
-                Console.WriteLine(GetMostRecentBooks(db));
+                //Console.WriteLine(GetMostRecentBooks(db));
+
+                //// 14. Increase Prices
+                //IncreasePrices(db);
+
+                //// 15. Remove Books
+                var deletedBooksCount = RemoveBooks(db);
+                Console.WriteLine($"{deletedBooksCount} books were deleted");
             }
         }
 
@@ -317,6 +324,27 @@
             }
 
             return result.ToString().Trim();
+        }
+
+        public static void IncreasePrices(BookShopContext context)
+        {
+            var books = context.Books
+                .Where(b => b.ReleaseDate.Value.Year < 2010)
+                .ToList();
+
+            books.ForEach(b => b.Price += 5);
+        }
+
+        public static int RemoveBooks(BookShopContext context)
+        {
+            var books = context.Books
+                .Where(b => b.Copies < 4200)
+                .ToList();
+
+            context.Books.RemoveRange(books);
+            context.SaveChanges();
+
+            return books.Count;
         }
     }
 }
