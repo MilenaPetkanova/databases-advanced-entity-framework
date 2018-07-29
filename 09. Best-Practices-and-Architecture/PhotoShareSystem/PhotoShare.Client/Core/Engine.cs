@@ -27,10 +27,11 @@
 				try
 				{
 					string[] input = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-					string result = commandInterpreter.Read(input);
+                    string result = commandInterpreter.Read(input);
 					Console.WriteLine(result);
 				}
-				catch (Exception exception) when (exception is SqlException || exception is ArgumentException ||
+				catch (Exception exception) when (exception is SqlException || 
+                                                  exception is ArgumentException ||
 				                                  exception is InvalidOperationException)
 				{
 					Console.WriteLine(exception.Message);

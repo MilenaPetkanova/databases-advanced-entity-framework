@@ -62,7 +62,8 @@
                    .IsRequired(false);
 
             builder.Property(e => e.IsDeleted)
-                   .IsRequired(true);
+                    .IsRequired(false)
+                    .HasDefaultValue(false);
         }
     }
 }

@@ -6,10 +6,16 @@
 
     public class ExitCommand : ICommand
     {
+        private const string EXIT_MESSAGE = "Good Bye.";
+
+        // Exits application.
         public string Execute(string[] data)
         {
+            Console.WriteLine(EXIT_MESSAGE);
+
             Environment.Exit(0);
-            return "Bye-bye!";
+
+            return EXIT_MESSAGE;
         }
     }
 }

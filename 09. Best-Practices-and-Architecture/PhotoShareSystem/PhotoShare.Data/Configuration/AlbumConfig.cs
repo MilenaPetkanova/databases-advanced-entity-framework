@@ -10,7 +10,7 @@
         public void Configure(EntityTypeBuilder<Album> builder)
         {
             builder.HasKey(e => e.Id);
-
+            
             builder.Property(e => e.Name)
                    .IsRequired()
                    .IsUnicode()

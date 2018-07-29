@@ -4,7 +4,6 @@ namespace PhotoShare.Data
 
     using Models;
     using Configuration;
-    using Microsoft.EntityFrameworkCore.Infrastructure;
 
     public class PhotoShareContext : DbContext
     { 

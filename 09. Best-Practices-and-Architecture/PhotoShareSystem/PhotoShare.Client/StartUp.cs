@@ -40,7 +40,12 @@
 			serviceCollection.AddTransient<IDatabaseInitializerService, DatabaseInitializerService>();
 
 			serviceCollection.AddTransient<IAlbumRoleService, AlbumRoleService>();
+			serviceCollection.AddTransient<IAlbumService, AlbumService>();
+			serviceCollection.AddTransient<IAlbumTagService, AlbumTagService>();
 			serviceCollection.AddTransient<IPictureService, PictureService>();
+			serviceCollection.AddTransient<ITagService, TagService>();
+			serviceCollection.AddTransient<ITownService, TownService>();
+			serviceCollection.AddTransient<IUserService, UserService>();
 
 
 			var serviceProvider = serviceCollection.BuildServiceProvider();
