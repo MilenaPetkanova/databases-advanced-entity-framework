@@ -38,9 +38,16 @@
 
         public Tag AddTag(string name)
         {
+            var tagName = name;
+
+            if (tagName.StartsWith("#"))
+            {
+                tagName = name.Substring(1);
+            }
+
             var tag = new Tag
             {
-                Name = name
+                Name = tagName
             };
 
             this.context.Tags.Add(tag);
