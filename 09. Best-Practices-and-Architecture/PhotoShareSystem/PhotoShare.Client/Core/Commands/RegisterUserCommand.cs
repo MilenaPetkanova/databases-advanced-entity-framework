@@ -12,11 +12,14 @@
         private const string INVALID_COMMAND = "Command RegisterUser not valid.";
         private const string UNMATCHED_PASSWORDS = "Passwords do not match.";
         private const string TAKEN_USERNAME = "Username {0} is already taken.";
+        private const string INVALID_CREDENTIALS = "Invalid credentials.";
 
+        private readonly IUserSessionService userSessionService;
         private readonly IUserService userService;
 
-        public RegisterUserCommand(IUserService userService)
+        public RegisterUserCommand(IUserSessionService userSessionService, IUserService userService)
         {
+           this.userSessionService = userSessionService;
            this.userService = userService;
         }
 
@@ -30,6 +33,8 @@
             var password = data[1];
             var repeatPassword = data[2];
             var email = data[3];
+
+            this.CheckIfLoggedOut();
 
             //var registerUserDto = new RegisterUserDto
             //{
@@ -56,6 +61,16 @@
             if (!data.Length.Equals(ARGS_COUNT))
             {
                 throw new ArgumentException(INVALID_COMMAND);
+            }
+        }
+
+        private void CheckIfLoggedOut()
+        {
+            var loggedIn = this.userSessionService.IsLoggedIn();
+
+            if (loggedIn)
+            {
+                throw new InvalidOperationException(INVALID_CREDENTIALS);
             }
         }
 

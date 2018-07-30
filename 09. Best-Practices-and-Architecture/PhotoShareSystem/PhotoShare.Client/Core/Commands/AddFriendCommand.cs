@@ -13,11 +13,14 @@
         private const string USER_NOT_FOUND = "User {0} not found.";
         private const string ALREADY_FRIENDS = "{0} is already a friend to {1}.";
         private const string ALREADY_SENT_REQUEST = "Request is already sent.";
-
+        private const string INVALID_CREDENTIALS = "Invalid credentials.";
+        
+        private readonly IUserSessionService userSessionService;
         private readonly IUserService userService;
 
-        public AddFriendCommand(IUserService userService)
+        public AddFriendCommand(IUserSessionService userSessionService, IUserService userService)
         {
+            this.userSessionService = userSessionService;
             this.userService = userService;
         }
 
@@ -29,6 +32,7 @@
             var friendUsername = data[1];
 
             this.ValidateUsernames(username, friendUsername);
+            this.CheckIfLoggedIn(username);
 
             var userFrindsDto = this.userService.ByUsername<UserFriendsDto>(username);
             var friendFriendsDto = this.userService.ByUsername<UserFriendsDto>(friendUsername);
@@ -38,6 +42,30 @@
             this.userService.AddFriend(userFrindsDto.Id, friendFriendsDto.Id);
 
             return string.Format(SUCCESSFULLY_ADDED, username, friendUsername);
+        }
+
+        private void ValidateUsernames(string username, string friendUsername)
+        {
+            if (!this.userService.Exists(username))
+            {
+                throw new ArgumentException(string.Format(USER_NOT_FOUND, username));
+            }
+
+            if (!this.userService.Exists(friendUsername))
+            {
+                throw new ArgumentException(string.Format(USER_NOT_FOUND, friendUsername));
+            }
+        }
+
+        private void CheckIfLoggedIn(string username)
+        {
+            var isLoggedIn = this.userSessionService.IsLoggedIn();
+            var isThisUserLoggedIn = this.userSessionService.GetUsername().Equals(username);
+
+            if (!isLoggedIn || !isThisUserLoggedIn)
+            {
+                throw new InvalidOperationException(INVALID_CREDENTIALS);
+            }
         }
 
         private void CheckIfAlreadyFriends(UserFriendsDto userFrindsDto, UserFriendsDto friendFriendsDto)
@@ -52,19 +80,6 @@
             if (userHasSentRequest && !friendHasSentRequest || !userHasSentRequest && friendHasSentRequest)
             {
                 throw new InvalidOperationException(ALREADY_SENT_REQUEST);
-            }
-        }
-
-        private void ValidateUsernames(string usernameReceivedRequest, string usernameSentRequest)
-        {
-            if (!this.userService.Exists(usernameReceivedRequest))
-            {
-                throw new ArgumentException(string.Format(USER_NOT_FOUND, usernameReceivedRequest));
-            }
-
-            if (!this.userService.Exists(usernameSentRequest))
-            {
-                throw new ArgumentException(string.Format(USER_NOT_FOUND, usernameSentRequest));
             }
         }
     }

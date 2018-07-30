@@ -8,11 +8,14 @@
     {
         private const string SUCCESSFULLY_ADDED = "Tag {0} was added successfully.";
         private const string ALREADY_EXISTS = "Tag {0} already exists.";
+        private const string INVALID_CREDENTIALS = "Invalid credentials.";
 
+        private readonly IUserSessionService userSessionService;
         private readonly ITagService tagService;
         
-        public AddTagCommand(ITagService tagService)
+        public AddTagCommand(IUserSessionService userSessionService, ITagService tagService)
         {
+            this.userSessionService = userSessionService;
             this.tagService = tagService;
         }
 
@@ -22,11 +25,22 @@
         {
             var tag = args[0];
 
+            this.CheckIfLoggedIn();
             this.ValidateTag(tag);
 
             this.tagService.AddTag(tag);
 
             return string.Format(SUCCESSFULLY_ADDED, tag);
+        }
+
+        private void CheckIfLoggedIn()
+        {
+            var isLoggedIn = this.userSessionService.IsLoggedIn();
+
+            if (!isLoggedIn)
+            {
+                throw new InvalidOperationException(INVALID_CREDENTIALS);
+            }
         }
 
         private void ValidateTag(string tag)

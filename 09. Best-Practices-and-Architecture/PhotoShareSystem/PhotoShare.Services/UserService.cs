@@ -37,21 +37,15 @@
 
         public void Delete(string username)
         {
-            //var user = this.ByUsername<User>(username);
-
             var user = this.context.Users.SingleOrDefault(u => u.Username.Equals(username));
 
             user.IsDeleted = true;
-
-            //this.context.Users.Remove(user);
 
             this.context.SaveChanges();
         }
 
         public void SetBornTown(int userId, int townId)
         {
-            //var bornTown = this.ById<Town>(townId);
-
             var user = this.context.Users.Find(userId);
             var bornTown = this.context.Towns.Find(townId);
 
@@ -62,9 +56,6 @@
 
         public void SetCurrentTown(int userId, int townId)
         {
-            //var user = this.ById<User>(userId);
-            //var currentTown = this.ById<Town>(townId);
-
             var user = this.context.Users.Find(userId);
             var currentTown = this.context.Towns.Find(townId);
 
@@ -75,8 +66,6 @@
 
         public void ChangePassword(int userId, string password)
         {
-            //var user = this.ById<User>(userId);
-
             var user = this.context.Users.Find(userId);
 
             user.Password = password;

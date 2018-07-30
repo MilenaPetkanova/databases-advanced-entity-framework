@@ -29,6 +29,7 @@
 					string[] input = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
                     string result = commandInterpreter.Read(input);
 					Console.WriteLine(result);
+                    Console.WriteLine();
 				}
 				catch (Exception exception) when (exception is SqlException || 
                                                   exception is ArgumentException ||

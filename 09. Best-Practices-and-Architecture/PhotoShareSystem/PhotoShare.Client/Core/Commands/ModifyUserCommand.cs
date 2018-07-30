@@ -13,12 +13,15 @@
         private const string INVALID_USER = "User {0} not found.";
         private const string PROPERTY_NOT_FOUND = "Property {0} not supported.";
         private const string INVALID_VALUE = "Value {0} not valid.\n{1}";
+        private const string INVALID_CREDENTIALS = "Invalid credentials.";
 
+        private readonly IUserSessionService userSessionService;
         private readonly IUserService userService;
         private readonly ITownService townService;
 
-        public ModifyUserCommand(IUserService userService, ITownService townService)
+        public ModifyUserCommand(IUserSessionService userSessionService, IUserService userService, ITownService townService)
         {
+            this.userSessionService = userSessionService;
             this.userService = userService;
             this.townService = townService;
         }
@@ -37,6 +40,7 @@
             var newValue = data[2];
 
             this.ValidateUser(username);
+            this.CheckIfLoggedIn();
 
             var userId = this.userService.ByUsername<UserDto>(username).Id;
             
@@ -68,6 +72,14 @@
             if (!this.userService.Exists(username))
             {
                 throw new ArgumentException(string.Format(INVALID_USER, username));
+            }
+        }
+
+        private void CheckIfLoggedIn()
+        {
+            if (!this.userSessionService.IsLoggedIn())
+            {
+                throw new InvalidOperationException(INVALID_CREDENTIALS);
             }
         }
 

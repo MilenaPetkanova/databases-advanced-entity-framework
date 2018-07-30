@@ -11,11 +11,14 @@
         private const string SUCCESSFULLY_DELETED = "User {0} was deleted successfully.";
         private const string USER_NOT_FOUND = "User {0} not found.";
         private const string ALREADY_DELETED = "User {0} is already deleted.";
+        private const string INVALID_CREDENTIALS = "Invalid credentials.";
 
+        private readonly IUserSessionService userSessionService;
         private readonly IUserService userService;
 
-        public DeleteUserCommand(IUserService userService)
+        public DeleteUserCommand(IUserSessionService userSessionService, IUserService userService)
         {
+            this.userService = userService;
             this.userService = userService;
         }
 
@@ -26,6 +29,7 @@
             string username = data[0];
 
             this.ValidateUser(username);
+            this.CheckIfTheSameUserIsLoggedIn(username);
 
             this.userService.Delete(username);
 
@@ -46,6 +50,17 @@
             if (user.IsDeleted.Value)
             {
                 throw new InvalidOperationException(string.Format(ALREADY_DELETED, username));
+            }
+        }
+
+        private void CheckIfTheSameUserIsLoggedIn(string username)
+        {
+            var isLoggedIn = this.userSessionService.IsLoggedIn();
+            var isTheSameUser = this.userSessionService.GetUsername().Equals(username);
+
+            if (!isLoggedIn || !isTheSameUser)
+            {
+                throw new InvalidOperationException(INVALID_CREDENTIALS);
             }
         }
     }

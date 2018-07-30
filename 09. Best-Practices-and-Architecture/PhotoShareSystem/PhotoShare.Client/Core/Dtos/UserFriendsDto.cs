@@ -1,7 +1,6 @@
 ﻿namespace PhotoShare.Client.Core.Dtos
 {
     using System.Collections.Generic;
-    using Commands;
 
     public class UserFriendsDto
     {

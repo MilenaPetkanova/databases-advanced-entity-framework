@@ -15,13 +15,16 @@
         private const string ALBUM_ALREADY_EXISTS = "Album {0} already exists.";
         private const string COLOR_NOT_FOUND = "Color {0} not found.";
         private const string INVALID_TAGS = "Invalid tags.";
+        private const string INVALID_CREDENTIALS = "Invalid credentials.";
 
+        private readonly IUserSessionService userSessionService;
         private readonly IAlbumService albumService;
         private readonly IUserService userService;
         private readonly ITagService tagService;
 
-        public CreateAlbumCommand(IAlbumService albumService, IUserService userService, ITagService tagService)
+        public CreateAlbumCommand(IUserSessionService userSessionService, IAlbumService albumService, IUserService userService, ITagService tagService)
         {
+            this.userSessionService = userSessionService;
             this.albumService = albumService;
             this.userService = userService;
             this.tagService = tagService;
@@ -36,6 +39,7 @@
             var bgColor = data[2];
             var tags = data.Skip(3).ToArray();
 
+            this.CheckIfLoggedIn();
             this.ValidateUser(username);
             this.ValidateAlbumTitle(albumTitle);
             this.ValidateBgColor(bgColor);
@@ -46,6 +50,16 @@
             this.albumService.Create(userId, albumTitle, bgColor, tags);
 
             return string.Format(SUCCESSFULLY_CREATED, albumTitle);
+        }
+
+        private void CheckIfLoggedIn()
+        {
+            var isLoggedIn = this.userSessionService.IsLoggedIn();
+
+            if (!isLoggedIn)
+            {
+                throw new InvalidOperationException(INVALID_CREDENTIALS);
+            }
         }
 
         private void ValidateUser(string username)
