@@ -4,10 +4,14 @@
 
     using Contracts;
     using PhotoShare.Services.Contracts;
+    using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    using PhotoShare.Client.Core.Dtos;
 
     public class RegisterUserCommand : ICommand
     {
         private const string SUCCESSFULLY_REGISTRERED = "User {0} was registered successfully.";
+        private const string INVALID_DATA = "Invalid data.";
         private const int ARGS_COUNT = 4;
         private const string INVALID_COMMAND = "Command RegisterUser not valid.";
         private const string UNMATCHED_PASSWORDS = "Passwords do not match.";
@@ -34,20 +38,19 @@
             var repeatPassword = data[2];
             var email = data[3];
 
+            var registerUserDto = new RegisterUserDto
+            {
+                Username = username,
+                Password = password,
+                Email = email
+            };
+
+            if (!this.IsValid(registerUserDto))
+            {
+                throw new ArgumentException(INVALID_DATA);
+            }
+
             this.CheckIfLoggedOut();
-
-            //var registerUserDto = new RegisterUserDto
-            //{
-            //    Username = username,
-            //    Password = password,
-            //    Email = email
-            //};
-
-            //if (!this.IsValid(registerUserDto))
-            //{
-            //    throw new ArgumentException("Invalid data!");
-            //}
-
             this.ValidateUsername(username);
             this.ValidatePasswordMatch(password, repeatPassword);
 
@@ -90,12 +93,12 @@
             }
         }
 
-        //private bool IsValid(object obj)
-        //{
-        //    var validationContext = new ValidationContext(obj);
-        //    var validationResults = new List<ValidationResult>();
+        private bool IsValid(object obj)
+        {
+            var validationContext = new ValidationContext(obj);
+            var validationResults = new List<ValidationResult>();
 
-        //    return Validator.TryValidateObject(obj, validationContext, validationResults, true);
-        //}
+            return Validator.TryValidateObject(obj, validationContext, validationResults, true);
+        }
     }
 }
