@@ -1,0 +1,22 @@
+<student>
+	<name>Milena Petkanova</name>
+	<gender>female</gender>
+	<birthDate>1991/05/08</birthDate>
+	<phoneNumber>359888888888</phoneNumber>
+	<email>testEmail@gmail.com</email>
+	<university>Software University</university>
+	<specialty>C# Developer</specialty>
+	<facultyNumber>1234567890</facultyNumber>
+	<exams>
+		<exam>
+			<name>Programming Fundamentals</name>
+			<dateTaken>2017/11/05</dateTaken>
+			<grade>5.88</grade>
+		</exam>
+		<exam>
+			<name>Software Technologies</name>
+			<dateTaken>2017/12/20</dateTaken>
+			<grade>6.00</grade>
+		</exam>
+	</exams>
+</student>

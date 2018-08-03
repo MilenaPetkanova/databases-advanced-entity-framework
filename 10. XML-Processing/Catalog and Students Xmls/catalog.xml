@@ -1,0 +1,37 @@
+<albums>
+	<album>
+	  <name>The King of Limbs</name>
+	  <year>1999</year>
+	  <producer>Test Producer</producer>
+	  <price>19.99</price>
+	  <songs>
+		  <song title="Bloom" duration="5:15"/>
+		  <song title="Morning Mr Magpie" duration="4:41"/>
+		  <song title="Little by Little" duration="4:27"/>
+		  <song title="Feral" duration="3:13"/>
+		  <song title="Lotus Flower" duration="5:01"/>
+		  <song title="Codex" duration="4:47"/>
+		  <song title="Give Up the Ghost" duration="4:50"/>
+		  <song title="Separator" duration="5:20"/>
+	  </songs>
+	</album>
+	<album>
+	  <name>Dummy</name>
+	  <year>1991</year>
+	  <producer>Test Producer</producer>
+	  <price>29.99</price>
+	  <songs>
+		  <song title="Mysterons"  duration="5:02"/>
+		  <song title="Sour Times"  duration="4:11"/>
+		  <song title="Strangers"  duration="3:55"/>
+		  <song title="It Could Be Sweet"  duration="4:16"/>
+		  <song title="Wandering Star"  duration="4:51"/>
+		  <song title="It's a Fire"  duration="3:49"/>
+		  <song title="Numb"  duration="3:54"/>
+		  <song title="Roads"  duration="5:02"/>
+		  <song title="Pedestal"  duration="3:39"/>
+		  <song title="Biscuit"  duration="5:01"/>
+	<song title="Glory Box" duration="5:06"/>
+	  </songs>
+	</album>
+</albums>
