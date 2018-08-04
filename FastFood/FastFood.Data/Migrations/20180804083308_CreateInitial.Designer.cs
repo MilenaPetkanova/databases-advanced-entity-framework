@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastFood.Data.Migrations
 {
     [DbContext(typeof(FastFoodDbContext))]
-    [Migration("20180804081026_CreateInitial")]
+    [Migration("20180804083308_CreateInitial")]
     partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,7 @@ namespace FastFood.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("FastFood.Models.Employee", b =>
@@ -52,7 +52,7 @@ namespace FastFood.Data.Migrations
 
                     b.HasIndex("PositionId");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("FastFood.Models.Item", b =>
@@ -75,7 +75,7 @@ namespace FastFood.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Item");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("FastFood.Models.Order", b =>
@@ -98,7 +98,7 @@ namespace FastFood.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("FastFood.Models.OrderItem", b =>
@@ -113,7 +113,7 @@ namespace FastFood.Data.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("FastFood.Models.Position", b =>
@@ -130,7 +130,7 @@ namespace FastFood.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Position");
+                    b.ToTable("Positions");
                 });
 
             modelBuilder.Entity("FastFood.Models.Employee", b =>
