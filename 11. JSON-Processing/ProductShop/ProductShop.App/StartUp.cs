@@ -19,7 +19,7 @@
 
             var jsonProcessor = new JsonProcessor(context);
 
-            //jsonProcessor.ImportData();
+            jsonProcessor.ImportData();
 
             jsonProcessor.EmportData();
         }

@@ -1,15 +1,16 @@
 ﻿namespace ProductShop.App
 {
-    using Newtonsoft.Json;
-    using ProductShop.App.Dto;
-    using ProductShop.Data;
-    using ProductShop.Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
 
+    using Newtonsoft.Json;
+
+    using ProductShop.App.Dto;
+    using ProductShop.Data;
+    using ProductShop.Models;
+    
     public class JsonProcessor
     {
         private const string PATH_TO_IMPORT = "Json/ImportedFiles/";
@@ -30,11 +31,11 @@
             this.GenerateCategoryProducts();
         }
 
-        internal void EmportData()
+        public void EmportData()
         {
-            //this.ExportProductsInRange();
-            //this.ExportSuccessfullySoldProducts();
-            //this.ExportCategoriesByProductsCount();
+            this.ExportProductsInRange();
+            this.ExportSuccessfullySoldProducts();
+            this.ExportCategoriesByProductsCount();
             this.ExportUsersAndProducts();
         }
 
@@ -184,24 +185,14 @@
             File.WriteAllText(PATH_TO_EXPORT + "categories-by-products.json", jsonString);
         }
 
-        private JsonSerializerSettings GetDefaultNullValueHandling()
-        {
-            var settings = new JsonSerializerSettings
-            {
-                DefaultValueHandling = DefaultValueHandling.Ignore
-            };
-
-            return settings;
-        }
-
         private void ExportUsersAndProducts()
         {
             var usersAndProductsDTOs = new UserCollectionDTO
-                {
-                    UsersCount = this.context.Users
+            {
+                UsersCount = this.context.Users
                         .Where(u => u.ProductsSold.Count > 0)
                         .Count(),
-                    Users = this.context.Users
+                Users = this.context.Users
                         .Select(u => new UserDTO
                         {
                             FirstName = u.FirstName,
@@ -220,13 +211,23 @@
                             }
                         })
                         .ToArray()
-                };
+            };
 
             var jsonSerializerSettings = this.GetDefaultNullValueHandling();
 
             var jsonString = JsonConvert.SerializeObject(usersAndProductsDTOs, Formatting.Indented, jsonSerializerSettings);
 
             File.WriteAllText(PATH_TO_EXPORT + "users-and-products.json", jsonString);
+        }
+
+        private JsonSerializerSettings GetDefaultNullValueHandling()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                DefaultValueHandling = DefaultValueHandling.Ignore
+            };
+
+            return settings;
         }
     }
 }
