@@ -2,17 +2,18 @@
 {
     using System;
     using System.IO;
-    using System.Xml.Serialization;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Xml;
+    using System.Xml.Serialization;
+
     using AutoMapper;
 
     using ProductShop.Data;
-    using ProductShop.App.Dtos.Import;
     using ProductShop.Models;
-    using System.Linq;
+    using ProductShop.App.Dtos.Import;
     using ProductShop.App.Dtos.Export;
-    using System.Text;
-    using System.Xml;
 
     public class XmlProcessor
     {

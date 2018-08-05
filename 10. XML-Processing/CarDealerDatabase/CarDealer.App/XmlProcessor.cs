@@ -333,9 +333,6 @@
 
         private void ExportTotalSalesByCustomer()
         {
-            var test = this.context.Customers
-                .Sum(c => c.Sales.Sum(s => s.Car.PartCars.Sum(cp => cp.Part.Price)));
-
             var customerTotalSalesDTOs = this.context.Customers
                 .Where(c => c.Sales.Count > 0)
                 .Select(c => new CustomerTotalSalesDTO
