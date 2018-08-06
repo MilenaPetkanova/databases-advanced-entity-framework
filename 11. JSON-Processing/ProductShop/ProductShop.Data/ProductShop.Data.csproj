@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.1" />
-    <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
