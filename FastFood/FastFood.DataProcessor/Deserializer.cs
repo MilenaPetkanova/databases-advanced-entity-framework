@@ -16,12 +16,12 @@
     using FastFood.Models.Enums;
 
     public static class Deserializer
-	{
-		private const string FailureMessage = "Invalid data format.";
-		private const string SuccessMessage = "Record {0} successfully imported.";
+    {
+        private const string FailureMessage = "Invalid data format.";
+        private const string SuccessMessage = "Record {0} successfully imported.";
 
-		public static string ImportEmployees(FastFoodDbContext context, string jsonString)
-		{
+        public static string ImportEmployees(FastFoodDbContext context, string jsonString)
+        {
             var sb = new StringBuilder();
 
             var deserializedEmployeeDTOs = JsonConvert.DeserializeObject<EmployeeDTO[]>(jsonString);
@@ -66,10 +66,10 @@
 
             var result = sb.ToString();
             return result;
-		}
+        }
 
-		public static string ImportItems(FastFoodDbContext context, string jsonString)
-		{
+        public static string ImportItems(FastFoodDbContext context, string jsonString)
+        {
             var sb = new StringBuilder();
 
             var deserializedItemDTOs = JsonConvert.DeserializeObject<ItemDTO[]>(jsonString);
@@ -102,7 +102,7 @@
                     context.Categories.Add(category);
                     context.SaveChanges();
                 }
-                
+
                 var item = new Item
                 {
                     Name = itemDTO.Name,
@@ -122,8 +122,8 @@
             return result;
         }
 
-		public static string ImportOrders(FastFoodDbContext context, string xmlString)
-		{
+        public static string ImportOrders(FastFoodDbContext context, string xmlString)
+        {
             var sb = new StringBuilder();
 
             var serializer = new XmlSerializer(typeof(OrderDTO[]), new XmlRootAttribute("Orders"));

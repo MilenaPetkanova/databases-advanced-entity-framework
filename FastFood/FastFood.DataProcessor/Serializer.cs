@@ -12,7 +12,7 @@
     using FastFood.Models.Enums;
     using FastFood.Data;
     using FastFood.DataProcessor.Dto.Export;
-    
+
     public class Serializer
     {
         public static string ExportOrdersByEmployee(FastFoodDbContext context, string employeeName, string orderType)
