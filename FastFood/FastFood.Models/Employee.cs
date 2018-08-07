@@ -10,6 +10,7 @@ namespace FastFood.Models
             this.Orders = new HashSet<Order>();
         }
 
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -20,8 +21,9 @@ namespace FastFood.Models
         [Range(15, 80)]
         public int Age { get; set; }
 
-        [Required]
         public int PositionId { get; set; }
+
+        [Required]
         public Position Position { get; set; }
 
         public ICollection<Order> Orders { get; set; }

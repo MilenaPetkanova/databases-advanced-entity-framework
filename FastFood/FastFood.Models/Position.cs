@@ -10,6 +10,7 @@
             this.Employees = new HashSet<Employee>();
         }
 
+        [Key]
         public int Id { get; set; }
 
         [Required]

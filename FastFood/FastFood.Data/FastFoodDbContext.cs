@@ -1,10 +1,11 @@
-﻿using FastFood.Data.EntitiesConfig;
-using FastFood.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace FastFood.Data
+﻿namespace FastFood.Data
 {
-	public class FastFoodDbContext : DbContext
+    using Microsoft.EntityFrameworkCore;
+
+    using FastFood.Models;
+    using FastFood.Models.Enums;
+
+    public class FastFoodDbContext : DbContext
 	{
 		public FastFoodDbContext()
 		{
@@ -32,12 +33,43 @@ namespace FastFood.Data
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
-            builder.ApplyConfiguration(new CategoryConfig());
-            builder.ApplyConfiguration(new ItemConfig());
-            builder.ApplyConfiguration(new OrderItemConfig());
-            builder.ApplyConfiguration(new OrderConfig());
-            builder.ApplyConfiguration(new EmployeeConfig());
-            builder.ApplyConfiguration(new PositionConfig());
-		}
-	}
+            builder.Entity<Position>()
+                .HasAlternateKey(p => p.Name);
+
+            builder.Entity<Employee>()
+                .HasOne(e => e.Position)
+                .WithMany(p => p.Employees)
+                .HasForeignKey(e => e.PositionId);
+
+            builder.Entity<Item>()
+                .HasAlternateKey(i => i.Name);
+
+            builder.Entity<Item>()
+                .HasOne(i => i.Category)
+                .WithMany(c => c.Items)
+                .HasForeignKey(i => i.CategoryId);
+
+            builder.Entity<Order>()
+                .Property(o => o.Type)
+                .HasDefaultValue(OrderType.ForHere);
+
+            builder.Entity<Order>()
+                .HasOne(o => o.Employee)
+                .WithMany(e => e.Orders)
+                .HasForeignKey(o => o.EmployeeId);
+
+            builder.Entity<OrderItem>()
+                .HasKey(oi => new { oi.OrderId, oi.ItemId });
+
+            builder.Entity<OrderItem>()
+                .HasOne(oi => oi.Item)
+                .WithMany(i => i.OrderItems)
+                .HasForeignKey(oi => oi.ItemId);
+
+            builder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+        }
+    }
 }

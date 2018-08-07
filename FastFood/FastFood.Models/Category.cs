@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Category
     {
@@ -10,6 +11,8 @@
             this.Items = new HashSet<Item>();
         }
 
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [Key, Column("Id", Order = 1)]
         public int Id { get; set; }
 
         [Required]
